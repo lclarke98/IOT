@@ -14,3 +14,17 @@ function led(r, g, b)
 end
 led(512, 0, 0) --  set led to red
 led(0, 0, 512) -- set led to blue.
+
+pinR = 1
+pinY = 2
+pinG = 3
+
+onState = 1023
+offState = 0
+
+
+function trafficLight(dc_r,dc_g,dc_y)
+    pwm.setduty(pinR,dc_r)
+    pwm.setduty(pinG,dc_g)
+    pwm.setduty(pinY,dc_y)
+end
