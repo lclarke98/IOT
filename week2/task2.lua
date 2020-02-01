@@ -1,5 +1,5 @@
 dc=1023
-pinDim = 3
+pinDim = 2
 pwm.setup(pinDim,1000,dc)
 pwm.start(pinDim)
 mytimer = tmr.create()
