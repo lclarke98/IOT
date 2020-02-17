@@ -1,4 +1,5 @@
 pinADC = 0
+mytimer = tmr.create()
 --A0 pin
 mytimer:register(500, 1, function() 
  digitV = adc.read(pinADC)
