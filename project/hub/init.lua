@@ -1,3 +1,5 @@
+-- the hub will recieve the data sent from the sensors and add them to the db
+
 wifi.sta.autoconnect(1)
 -- autoconnect
 wifi.sta.sethostname("uopNodeMCU")

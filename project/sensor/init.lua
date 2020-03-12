@@ -1,3 +1,5 @@
+-- The sensor will connect to the hub and send the sensor data
+
 wifi.sta.autoconnect(1)
 -- autoconnect
 wifi.sta.sethostname("uopNodeMCU")
