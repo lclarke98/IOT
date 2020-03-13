@@ -1,7 +1,7 @@
 HOST = "io.adafruit.com"
 PORT = 1883
 ADAFRUIT_IO_USERNAME = "lclarke98"
-ADAFRUIT_IO_KEY = "aio_PCVw59cFV4CDvll8a26WAzfGdjzT"
+ADAFRUIT_IO_KEY = "DONT COMMIT IT"
 m = mqtt.Client("Client1", 300, ADAFRUIT_IO_USERNAME, ADAFRUIT_IO_KEY)
 m:lwt("/lwt", "Now offline", 1, 0)
 m:on("connect", function(client)
