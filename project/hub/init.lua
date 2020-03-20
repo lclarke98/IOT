@@ -29,6 +29,10 @@ srv:listen(2020, function(conn)
         print("Message has been sent out from the Server\n")
     end)
     conn:on("receive", function(conn, s)
+
+        -- do something here
+        -- maybe call a function
+        -- sendData()
         if s == "1" then
             gpio.mode(pinLED1, gpio.OUTPUT)
             gpio.write(pinLED1, gpio.LOW)

@@ -14,25 +14,23 @@ wifi.sta.config(station_cfg)
 
 mytimer = tmr.create()
 mytimer:register(3000, 1, function()
+    dhtPin = 2
+    status, temp, humi, temp_dec, humi_dec = dht.read11(dhtPin)
+    if status == dht.OK then
+        print("DHT Temperature:" .. temp .. ";" .. "Humidity:" .. humi)
+        -- 2 dots are used for concatenation
+    elseif status == dht.ERROR_CHECKSUM then
+        print("DHT Checksum error.")
+    elseif status == dht.ERROR_TIMEOUT then
+        print("DHT timed out.")
+    end
+    print("Temperature and Humidity Given")
     if wifi.sta.getip() == nil then
         print("Connecting to AP...\n")
     else
         cl = net.createConnection(net.TCP, 0)
         -- create a TCP based not encryped client
-        cl:on("connection", function(conn, s)
-            dhtPin = 2
-            status, temp, humi, temp_dec, humi_dec = dht.read11(dhtPin)
-            if status == dht.OK then
-                -- 3 different status
-                -- dht.OK, dht.ERROR_CHECKSUM, dht.ERROR_TIMEOUT 
-                conn:send("DHT Temperature:" .. temp .. ";" .. "Humidity:" .. humi)
-                -- 2 dots are used for concatenation
-            elseif status == dht.ERROR_CHECKSUM then
-                conn:send("DHT Checksum error.")
-            elseif status == dht.ERROR_TIMEOUT then
-                conn:send("DHT timed out.")
-            end
-        end)
+        cl:on("connection", function(conn, s) conn:send(temp) end)
         cl:on("disconnection",
               function(conn, s) print("Now we are disconnected\n") end)
         cl:on("sent", function(conn, s)
@@ -41,7 +39,7 @@ mytimer:register(3000, 1, function()
         cl:on("receive", function(conn, s)
             print("What we receive from the server\n" .. s .. "\n")
         end)
-        cl:connect(1990, "192.168.0.123")
+        cl:connect(2020, "192.168.0.123")
     end
 end)
 mytimer:start()
