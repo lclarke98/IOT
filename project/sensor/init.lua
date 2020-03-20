@@ -1,5 +1,4 @@
 -- The sensor will connect to the hub and send the sensor data
-
 wifi.sta.autoconnect(1)
 -- autoconnect
 wifi.sta.sethostname("uopNodeMCU")
@@ -18,18 +17,21 @@ mytimer:register(3000, 1, function()
     if wifi.sta.getip() == nil then
         print("Connecting to AP...\n")
     else
-        ip, nm, gw = wifi.sta.getip()
-        mac = wifi.sta.getmac()
-        rssi = wifi.sta.getrssi()
-        print("IP Info: \nIP Address: ", ip)
-        print("Netmask: ", nm)
-        print("Gateway Addr: ", gw)
-        print("MAC: ", mac)
-        print("RSSI: ", rssi, "\n")
         cl = net.createConnection(net.TCP, 0)
         -- create a TCP based not encryped client
         cl:on("connection", function(conn, s)
-            conn:send("Now in connection")
+            dhtPin = 2
+            status, temp, humi, temp_dec, humi_dec = dht.read11(dhtPin)
+            if status == dht.OK then
+                -- 3 different status
+                -- dht.OK, dht.ERROR_CHECKSUM, dht.ERROR_TIMEOUT 
+                conn:send("DHT Temperature:" .. temp .. ";" .. "Humidity:" .. humi)
+                -- 2 dots are used for concatenation
+            elseif status == dht.ERROR_CHECKSUM then
+                conn:send("DHT Checksum error.")
+            elseif status == dht.ERROR_TIMEOUT then
+                conn:send("DHT timed out.")
+            end
         end)
         cl:on("disconnection",
               function(conn, s) print("Now we are disconnected\n") end)
@@ -39,14 +41,8 @@ mytimer:register(3000, 1, function()
         cl:on("receive", function(conn, s)
             print("What we receive from the server\n" .. s .. "\n")
         end)
-        -- on(event, function())
-        -- event can be “connection”, “reconnection”, “disconnection”, “receive” or “sent”
-        -- function(net.socket[, para]) is the callback function.
-        -- The first parameter of callback is the socket.
-        -- If event is “receive”, the second parameter is the received data as string.
-        -- If event is “disconnection” or “reconnection”, the second parameter is error code.
         cl:connect(1990, "192.168.0.123")
-        -- the local IP of your test server
     end
 end)
 mytimer:start()
+
