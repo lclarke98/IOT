@@ -27,7 +27,7 @@ int main (int argc, char **argv)
 
 	else
 	{
-		(mysql_query(&mysql, "INSERT into 'vcs'.'users' ('id', 'fname', 'sname') VALUES ('3', 'rana', 'sameer')"));
+		(mysql_query(&mysql, "INSERT into `vcs`.`users` (`id`, `fname`, `sname`) VALUES ('3', 'rana', 'sameer')"));
 		if (query_state !=0) {
 		cout << mysql_error(connection) << endl;
 		return 1;
