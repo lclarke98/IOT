@@ -2,8 +2,8 @@
 ADC = 0
 LED = 4
 timer = tmr.create()
-pwm.setup(pinLED, 500, 1023)
-pwm.start(pinLED)
+pwm.setup(LED, 500, 1023)
+pwm.start(LED)
 
 -- timer function
 timer:register(200, 1, function() 
@@ -14,3 +14,4 @@ end
 )
 
 timer:start()
+
