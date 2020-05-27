@@ -1,38 +1,12 @@
 import matplotlib.pyplot as plt
-from sklearn import datasets
-
-
-iris = datasets.load_iris()
-print(iris)
-irisx = iris.data
-print(irisx.shape)
-irisy = iris.target
-print(irisx.shape)
-
-digits = datasets.load_digits()
-print(digits)
-digitsx = digits.data
-print(digitsx.shape)
-
-digitsy = digits.target
-print(digitsy.shape)
-
-plt.gray()
-plt.matshow(digits.images[990])
-
-plt.show()
-
 import pandas as pd
-import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.metrics import confusion_matrix
-
-from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
 from sklearn import datasets
 from sklearn.model_selection import train_test_split
+from sklearn.neighbors import KNeighborsClassifier
 
 def confusionM(y_true,y_predict,target_names):
-
     cMatrix = confusion_matrix(y_true,y_predict)
     df_cm = pd.DataFrame(cMatrix,index=target_names,columns=target_names)
     plt.figure(figsize = (6,4))
@@ -42,13 +16,24 @@ def confusionM(y_true,y_predict,target_names):
     plt.ylabel('True label')
     plt.xlabel('Predicted label')
 
+
 iris = datasets.load_iris()
 X = iris.data
 y = iris.target
 target_names = iris.target_names
+
+digits = datasets.load_digits()
+digitsx = digits.data
+X = digits.data
+y = digits.target
+target_names = digits.target_names
+
+
 X_train, X_test, y_train, y_true = train_test_split(X, y)
-lda = LinearDiscriminantAnalysis()
-lda.fit(X_train,y_train)
-y_predict = lda.predict(X_test)
+nn = KNeighborsClassifier(n_neighbors=1)
+nn.fit(X_train,y_train)
+y_predict = nn.predict(X_test)
+print(y_predict)
+print(nn.score(X_test,y_true))
 
 confusionM(y_true,y_predict,target_names)
