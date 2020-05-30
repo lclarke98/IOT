@@ -29,10 +29,10 @@ function htmlUpdate(sck, flag)
     html = html ..
                '<body>\r\n<h1>Enter name and ID.</h1>\r\n<form method=\"post\">\r\n'
     
-    html = html .. '<input type=\"text\"'
+    html = html .. "<input type=\"button\" value=\"" .. name .. "'\">\r\n"
+    html = html .. "<input type=\"button\" value=\"" .. id .. "'\">\r\n"
     strButton = "submit"
-    html = html .. "<input type=\"button\" value=\"" .. strButton ..
-               "\" onclick=\"window.location.href='/" .. strButton .. "'\">\r\n"
+    html = html .. "<input type=\"button\" value=\"" .. strButton .. "\" onclick=\"window.location.href='/" .. name+id .. "'\">\r\n"
 
     html = html .. "</form>\r\n</body>\r\n</html>\r\n"
     sck:send(html)
