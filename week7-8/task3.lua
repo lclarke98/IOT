@@ -1,3 +1,35 @@
+wifi.sta.sethostname("NodeMCU")
+wifi.setmode(wifi.STATION)
+station_cfg = {}
+station_cfg.ssid = "******"
+station_cfg.pwd = "******"
+station_cfg.save = true
+wifi.sta.config(station_cfg)
+
+tmsrv = "uk.pool.ntp.org"
+
+mytimer = tmr.create()
+mytimer:register(3000, 1, function()
+    if wifi.sta.getip() == nil then
+        print("Connecting to AP...\n")
+    else
+
+        ip, nm, gw = wifi.sta.getip()
+        mac = wifi.sta.getmac()
+        rssi = wifi.sta.getrssi()
+        print("IP Info: \nIP Address: ", ip)
+        print("Netmask: ", nm)
+        print("Gateway Addr: ", gw)
+        print("MAC: ", mac)
+        print("RSSI: ", rssi, "\n")
+        sntp.sync(tmsrv, function()
+            print("Sync succeeded")
+            mytimer:stop()
+        end, function() print("Synchronization failed!") end, 1)
+    end
+end)
+mytimer:start()
+
 keyAPI = "9f418d12e2c0f5e721197b55a91010a3"
 lat = 50.80
 lon = -1.09

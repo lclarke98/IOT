@@ -1,6 +1,6 @@
 wifi.sta.autoconnect(1)
 --autoconnect
-wifi.sta.sethostname("uopNodeMCU")
+wifi.sta.sethostname("NodeMCU")
 wifi.setmode(wifi.STATION)
 station_cfg={}
 station_cfg.ssid="TP-Link_2854" 

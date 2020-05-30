@@ -1,8 +1,8 @@
 wifi.sta.sethostname("NodeMCU")
 wifi.setmode(wifi.STATION)
 station_cfg = {}
-station_cfg.ssid = "TP-Link_2854"
-station_cfg.pwd = "Leo_Clarke1998"
+station_cfg.ssid = "******"
+station_cfg.pwd = "******"
 station_cfg.save = true
 wifi.sta.config(station_cfg)
 
@@ -22,10 +22,10 @@ mytimer:register(3000, 1, function()
         print("Gateway Addr: ", gw)
         print("MAC: ", mac)
         print("RSSI: ", rssi, "\n")
-
         sntp.sync(tmsrv, function()
             print("Sync succeeded")
             mytimer:stop()
+            stampTime()
         end, function() print("Synchronization failed!") end, 1)
     end
 end)
@@ -81,3 +81,22 @@ function weatherPrint(t)
                             tm["mon"], tm["day"], tm["hour"], tm["min"],
                             tm["sec"]))
 end
+
+function stampTime()
+    sec, microsec, rate = rtctime.get()
+    tm = rtctime.epoch2cal(sec, microsec, rate)
+    print(string.format("%04d/%02d/%02d %02d:%02d:%02d", tm["year"], tm["mon"],
+                        tm["day"], tm["hour"], tm["min"], tm["sec"]))
+end
+
+function stampTime()
+    sec, microsec, rate = rtctime.get()
+    tm = rtctime.epoch2cal(sec, microsec, rate)
+    print(string.format("%04d/%02d/%02d %02d:%02d:%02d", tm["year"], tm["mon"],
+                        tm["day"], tm["hour"], tm["min"], tm["sec"]))
+end
+
+cron.schedule("0 7 * * *", function(e)
+    print("\n Alarm Clock \n It is 07:00!!! \n Get UP! \n")
+    weatherPrint()
+end)
