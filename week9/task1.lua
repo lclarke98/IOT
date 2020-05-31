@@ -11,6 +11,5 @@ m:on("connect", function(client)
                      function(client) print("Subscribe successfully") end)
 end)
 m:on("offline", function(client) print("Client offline") end)
-m:connect(HOST, PORT, false, false, function(conn) end, function(conn, reason)
-    print("ERROR: " .. reason)
-end)
+m:connect(HOST, PORT, false, false, function(conn) end,
+          function(conn, reason) print("ERROR: " .. reason) end)

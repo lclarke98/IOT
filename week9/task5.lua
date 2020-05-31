@@ -65,7 +65,6 @@ m:on("message", function(client, topic, data)
         pwm.setduty(pinPWM, dc)
     end
 end)
--- m:on
 
 m:connect(HOST, PORT, false, false, function(conn) end, function(conn, reason)
     print("Fail! Failed reason is: " .. reason)

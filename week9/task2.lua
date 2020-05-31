@@ -2,7 +2,6 @@ pinLED = 4
 gpio.mode(pinLED, gpio.OUTPUT)
 gpio.write(pinLED, gpio.HIGH)
 
-
 wifi.sta.sethostname("NodeMCU")
 wifi.setmode(wifi.STATION)
 station_cfg = {}
@@ -37,7 +36,6 @@ mytimer:register(3000, 1, function()
     end
 end)
 mytimer:start()
-
 
 m:lwt("/lwt", "Now offline", 1, 0)
 

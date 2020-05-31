@@ -59,7 +59,6 @@ mt.__newindex = function(table, key, value)
     end
 end
 obj = sjson.decoder(t)
--- from json to a readable table 
 
 function weatherPrint(t)
     print("\nWeather Today: " .. t["description"])

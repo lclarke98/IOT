@@ -45,7 +45,5 @@ mytimer:register(100, 1, function()
     end
 end)
 
-
 mytimer:start()
-
 

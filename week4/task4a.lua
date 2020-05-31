@@ -14,7 +14,7 @@ pwm.start(LED)
 mytimer:register(100, 1, function()
     if gpio.read(buttonPin) == 1 and pushed == 0 then
         print("here")
-        
+
         timer:start()
         pushed = 1
     elseif gpio.read(buttonPin) == 1 and pushed == 1 then
@@ -31,5 +31,4 @@ timer:register(200, 1, function()
 end)
 
 mytimer:start()
-
 
